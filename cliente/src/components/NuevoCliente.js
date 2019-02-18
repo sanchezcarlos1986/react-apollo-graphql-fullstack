@@ -29,21 +29,18 @@ export default class NuevoCliente extends Component {
   handleSubmit = (e, crearCliente) => {
     e.preventDefault()
     const { cliente: { nombre, apellido, empresa, edad, tipo }, emails } = this.state
-    const input = {
-      nombre,
-      apellido,
-      empresa,
-      edad: Number(edad),
-      emails,
-      tipo
-    }
-    
-    console.log({input})
-    debugger
+		const input = {
+			nombre,
+			apellido,
+			empresa,
+			edad: Number(edad),
+			emails,
+			tipo
+		}
 
-    crearCliente({
-      variables: { input }
-    })
+		crearCliente({
+			variables: { input }
+		})
   }
 
   nuevoCampo = () => {

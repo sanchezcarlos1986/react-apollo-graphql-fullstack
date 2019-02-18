@@ -6,7 +6,7 @@ import FormularioEditarCliente from './FormularioEditarCliente'
 
 export default class EditarCliente extends Component {
   render() {
-    const { id } = this.props.match.params
+    const { match: { params: { id } }, history } = this.props
     return (
       <Fragment>
         <h2 className="text-center">EditarCliente</h2>
@@ -18,6 +18,7 @@ export default class EditarCliente extends Component {
               return (
                 <FormularioEditarCliente
                   cliente={data.getCliente}
+                  history={history}
                 />
               )
             }}
