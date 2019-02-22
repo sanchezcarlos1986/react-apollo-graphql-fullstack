@@ -14,6 +14,14 @@ export const resolvers = {
           resolve(cliente)
         })
       })
+    },
+    totalClientes: root => {
+      return new Promise(resolve => {
+        Clientes.countDocuments({}, (err, count) => {
+          if (err) rejects(err)
+          resolve(count)
+        })
+      })
     }
   },
   Mutation: {

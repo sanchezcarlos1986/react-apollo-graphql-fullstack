@@ -31,6 +31,7 @@
   type Query {
     getClientes(limite: Int, offset: Int) : [Cliente]
     getCliente(id: ID): Cliente
+    totalClientes: String
   }
 
   """ Campo para ingresar Pedidos """

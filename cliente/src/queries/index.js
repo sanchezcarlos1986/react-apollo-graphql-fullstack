@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CLIENTS_QUERY = gql`
-  query {
-    getClientes {
+  query getClientes($limite: Int, $offset: Int){
+    getClientes(limite: $limite, offset: $offset) {
       id
       nombre
       apellido
@@ -13,6 +13,7 @@ export const CLIENTS_QUERY = gql`
       edad
       tipo
     }
+    totalClientes
   }
 `
 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { CLIENTS_QUERY } from '../queries'
 import { ELIMINAR_CLIENTE } from '../mutations'
 
+import Paginador from './Paginador'
 /**
  * pollInterval dice cada cuántos milisegundos se refrescarán los datos cacheados por Apollo
  */
@@ -13,6 +14,8 @@ const handleDelete = (id, eliminarCliente) => {
   eliminarCliente({ variables: { id } })  
 }
 
+const limite = 2
+
 export default class Clientes extends Component {
   state = {
     paginador: {
@@ -20,9 +23,29 @@ export default class Clientes extends Component {
       actual: 1
     }
   }
+
+  prevPage = () => {
+    this.setState({
+      paginador: {
+        offset: this.state.paginador.offset - limite,
+        actual: this.state.paginador.actual - 1
+      }
+    })
+  }
+
+  nextPage = () => {
+    this.setState({
+      paginador: {
+        offset: this.state.paginador.offset + limite,
+        actual: this.state.paginador.actual + 1
+      }
+    })
+  }
+
   render() {
+    const { paginador: { actual, offset } } = this.state
     return (
-      <Query query={CLIENTS_QUERY}>
+      <Query query={CLIENTS_QUERY} variables={{ limite, offset }}>
         {({ loading, error, data }) => {
           if (loading) return 'Loading...'
           if (error) return `Error: ${error.message}`
@@ -51,6 +74,13 @@ export default class Clientes extends Component {
                   )
                 }
               </ul>
+              <Paginador 
+                limite={limite} 
+                actual={actual} 
+                prevPage={this.prevPage} 
+                nextPage={this.nextPage} 
+                totalClientes={data.totalClientes}
+              />
             </Fragment>
           )
         }}
