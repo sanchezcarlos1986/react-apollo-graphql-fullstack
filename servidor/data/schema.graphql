@@ -42,6 +42,7 @@
     totalClientes: String
     #Productos
     obtenerProductos(limite: Int, offset: Int) : [Producto]
+    obtenerProducto(id: ID): Producto
   }
 
   """ Campo para ingresar Pedidos """
@@ -84,4 +85,6 @@
     eliminarCliente(id: ID!): String
     # Productos
     nuevoProducto(input: ProductoInput): Producto
+    actualizarProducto(input: ProductoInput): Producto
+    eliminarProducto(id: ID!): String
   }

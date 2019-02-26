@@ -26,7 +26,15 @@ export const resolvers = {
     // Productos
     obtenerProductos: (root, { limite, offset }) => {
       return Productos.find().limit(limite).skip(offset)
-    }
+    },
+    obtenerProducto: (root, { id }) => {
+      return new Promise((resolve, object) => {
+        Productos.findById(id, (err, producto) => {
+          if (err) rejects(err)
+          resolve(producto)
+        })
+      })
+    },
   },
   Mutation: {
     crearCliente: (root, { input: { nombre, apellido, empresa, emails, edad, tipo, pedidos } }) => {
@@ -80,6 +88,22 @@ export const resolvers = {
         nuevoProducto.save(err => {
           if (err) rejects(err)
           resolve(nuevoProducto)
+        })
+      })
+    },
+    actualizarProducto: (root, { input }) => {
+      return new Promise((resolve, object) => {
+        Productos.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, producto) => {
+          if (err) rejects(err)
+          resolve(producto)
+        })
+      })
+    },
+    eliminarProducto: (root, { id }) => {
+      return new Promise((resolve, object) => {
+        Productos.findOneAndRemove({ _id: id }, err => {
+          if (err) rejects(err)
+          resolve(`El producto nº ${id} se eliminó correctamente.`)
         })
       })
     },
