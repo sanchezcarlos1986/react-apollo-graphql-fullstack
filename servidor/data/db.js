@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+mongoose.set('useFindAndModify', false);
 
 mongoose.Promise = global.Promise
 
