@@ -94,7 +94,7 @@ class FormularioEditar extends Component {
 							disabled={this.validarForm()}
 							type="submit"
 							className="btn btn-success float-right">
-							Crear Producto
+							Guardar Cambios
                 </button>
 					</form>
 				)}

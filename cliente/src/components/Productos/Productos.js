@@ -21,7 +21,8 @@ export default class Productos extends Component {
     paginador: {
       offset: 0,
       actual: 1
-    }
+    },
+    message: ''
   }
 
   prevPage = () => {
@@ -43,7 +44,7 @@ export default class Productos extends Component {
   }
 
   render() {
-    const { paginador: { actual, offset } } = this.state
+    const { message, paginador: { actual, offset } } = this.state
     return (
       <Query query={PRODUCTOS_QUERY} variables={{ limite, offset }}>
         {({ loading, error, data }) => {
@@ -53,6 +54,10 @@ export default class Productos extends Component {
           return (
             <Fragment>
               <h2 className="text-center mt-4">Listado Productos</h2>
+              {
+                message && 
+                <p className="alert alert-success py-3 text-center my-3">{message}</p>
+              }
               <table className="table">
                 <thead>
                   <tr className="table-primary">
@@ -71,8 +76,20 @@ export default class Productos extends Component {
                         <td>{producto.precio}</td>
                         <td>{producto.stock}</td>
                         <td>
-                          <Mutation mutation={ELIMINAR_PRODUCTO}>
-                            {eliminarProducto => (
+                          <Mutation 
+                            mutation={ELIMINAR_PRODUCTO}
+                            onCompleted={data => {
+                              this.setState({
+                                message: data.eliminarProducto
+                              }, () => {
+                                setTimeout(() => {
+                                  this.setState({ message: '' })
+                                }, 2000);
+                              })
+                            }}
+                          >
+                            {                              
+                              eliminarProducto => (
                               <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(producto.id, eliminarProducto)}>&times; Eliminar</button>
                             )}
                           </Mutation>
