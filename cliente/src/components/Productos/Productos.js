@@ -53,27 +53,36 @@ export default class Productos extends Component {
           return (
             <Fragment>
               <h2 className="text-center mt-4">Listado Productos</h2>
-              <ul className="list-group mt-4">
-                {
-                  data.obtenerProductos.map(producto =>
-                    <li className="list-group-item" key={producto.id}>
-                      <div className="row justify-content-between align-items-center">
-                        <div className="col-md-8 d-flex justify-content-between align-items-center">
-                          <span><strong>{producto.nombre}</strong> - <i>Precio: ${producto.precio}</i> - Stock: {producto.stock}</span>
-                        </div>
-                        <div className="col-md-4 d-flex justify-content-end">
+              <table className="table">
+                <thead>
+                  <tr className="table-primary">
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Eliminar</th>
+                    <th scope="col">Editar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    data.obtenerProductos.map(producto =>
+                      <tr key={producto.id}>
+                        <td>{producto.nombre}</td>
+                        <td>{producto.precio}</td>
+                        <td>{producto.stock}</td>
+                        <td>
                           <Mutation mutation={ELIMINAR_PRODUCTO}>
                             {eliminarProducto => (
                               <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(producto.id, eliminarProducto)}>&times; Eliminar</button>
                             )}
                           </Mutation>
-                          <Link to={`/cliente/editar/${producto.id}`} className="btn btn-success d-block d-md-inline-block">Editar Producto</Link>
-                        </div>
-                      </div>
-                    </li>
-                  )
-                }
-              </ul>
+                        </td>
+                        <td> <Link to={`/producto/editar/${producto.id}`} className="btn btn-success d-block d-md-inline-block">Editar Producto</Link></td>
+                      </tr>
+                    )
+                  }
+                </tbody>
+              </table>
               <Paginador 
                 limite={limite} 
                 actual={actual} 

@@ -9,7 +9,7 @@ export default class EditarProducto extends Component {
     const { match: { params: { id } } } = this.props
     return (
       <Fragment>
-        <h2 className="text-center">EditarCliente</h2>
+        <h2 className="text-center">Editar Producto</h2>
         <div className="row justify-content-center">
           <Query query={PRODUCTO_QUERY} variables={{ id }}>
             {({ loading, error, data }) => {         
@@ -17,7 +17,7 @@ export default class EditarProducto extends Component {
               if (error) return `Error: ${error.message}`
               return (
                 <FormularioEditarProducto
-                  cliente={data.getCliente}
+                  producto={data.obtenerProducto}
                 />
               )
             }}

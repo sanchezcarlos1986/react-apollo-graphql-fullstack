@@ -5,169 +5,98 @@ import { withRouter } from 'react-router-dom'
 import { ACTUALIZAR_PRODUCTO } from '../../mutations'
 
 class FormularioEditar extends Component {
-	state =  {
-		cliente: this.props.cliente,
-		emails: this.props.cliente.emails
-	}
-
-	nuevoCampo = () => {
-		const { emails } = this.state
-		this.setState({
-			emails: emails.concat([{ email: '' }])
-		})
-	}
-
-	quitarCampo = i => {
-		this.setState({
-			emails: this.state.emails.filter((email, index) => i !== index)
-		})
-	}
-
-	leerCampo = (e, i) => {
-		const { emails } = this.state
-
-		const nuevoEmail = emails.map((email, index) => {
-			if (i !== index) return email
-			return {
-				...email,
-				email: e.target.value
-			}
-		})
-
-		this.setState({
-			emails: nuevoEmail
-		})
+	state = {
+		producto: this.props.producto,
 	}
 		
 	handleChange = e => {
 		const { name, value } = e.target
 		this.setState({
-			cliente: {
-				...this.state.cliente,
+			producto: {
+				...this.state.producto,
 				[name]: value
 			}
 		})
 	}
 
-	handleSubmit = (e, actualizarCliente) => {
+	handleSubmit = (e, actualizarProducto) => {
 		e.preventDefault()
-		const { cliente: { id, nombre, apellido, empresa, edad, tipo }, emails } = this.state
+		const { producto: { id, nombre, precio, stock } } = this.state
 		const input = {
 			id,
 			nombre,
-			apellido,
-			empresa,
-			edad: Number(edad),
-			emails,
-			tipo
+			precio: Number(precio),
+			stock: Number(stock)
 		}
-		
-		actualizarCliente({
+
+		actualizarProducto({
 			variables: { input }
 		})
 	}
 
+	validarForm = () => {
+		const { producto: { nombre, precio, stock } } = this.state
+		const noValido = !nombre || !precio || !stock
+		return noValido
+	}
+
 	render() { 
-		const { cliente: { nombre, apellido, empresa, edad, tipo }, emails } = this.state
+		const { producto: { nombre, precio, stock } } = this.state
 		const { history } = this.props
 
 					
 		return (
-			<Mutation mutation={ACTUALIZAR_PRODUCTO} onCompleted={() => history.push('/')}>
-				{actualizarCliente => (
-				<form className="col-md-8 m-3" onSubmit={e => this.handleSubmit(e, actualizarCliente)}>
-					<div className="form-row">
-						<div className="form-group col-md-6">
-							<label>Nombre</label>
+			<Mutation mutation={ACTUALIZAR_PRODUCTO} onCompleted={() => history.push('/productos')}>
+				{actualizarProducto => (
+					<form className="col-md-8 m-3" onSubmit={e => this.handleSubmit(e, actualizarProducto)}>
+						<div className="form-group">
+							<label>Nombre:</label>
 							<input
+								required
 								onChange={this.handleChange}
 								type="text"
 								name="nombre"
-								className="form-control" 
+								className="form-control"
+								placeholder="Nombre del Producto"
 								defaultValue={nombre}
 							/>
 						</div>
-						<div className="form-group col-md-6">
-							<label>Apellido</label>
-							<input
-								onChange={this.handleChange} 
-								type="text" 
-								name="apellido"
-								className="form-control" 
-								defaultValue={apellido}
-								/>
-						</div>
-					</div>
-										
-					<div className="form-row">
-							<div className="form-group col-md-12">
-								<label>Empresa</label>
-								<input
-									onChange={this.handleChange}
-									type="text" 
-									name="empresa"
-									className="form-control"
-									defaultValue={empresa} 
-								/>
-							</div>
-
-							{emails.map((input, index) => (
-								<div key={index} className="form-group col-md-12">
-									<label>Email {index + 1} : </label>
-									<div className="input-group">
-										<input
-											type="email"
-											placeholder={`Email`}
-											className="form-control" 
-											onChange={e => this.leerCampo(e, index)}
-											defaultValue={input.email}
-										/>
-										<div className="input-group-append">
-											<button 
-												className="btn btn-danger" 
-												type="button" 
-												onClick={() => this.quitarCampo(index)}> 
-												&times; Eliminar
-											</button>
-										</div>
-									</div>
+						<div className="form-group">
+							<label>Precio:</label>
+							<div className="input-group">
+								<div className="input-group-prepend">
+									<div className="input-group-text">$</div>
 								</div>
-							))}
-							<div className="form-group d-flex justify-content-center col-md-12">
-								<button 
-									onClick={this.nuevoCampo}
-									type="button" 
-									className="btn btn-warning">+ Agregar Email</button>
+								<input
+									required
+									onChange={this.handleChange}
+									type="number"
+									name="precio"
+									className="form-control"
+									placeholder="Precio del Producto"
+									defaultValue={precio}
+								/>
 							</div>
-					</div>
-
-					<div className="form-row">
-						<div className="form-group col-md-6">
-							<label>Edad</label>
+						</div>
+						<div className="form-group">
+							<label>Stock:</label>
 							<input
-								onChange={this.handleChange} 
-								type="text" 
-								name="edad"
+								required
+								onChange={this.handleChange}
+								type="number"
+								name="stock"
 								className="form-control"
-								defaultValue={edad}
+								placeholder="stock del Producto"
+								defaultValue={stock}
 							/>
 						</div>
-						<div className="form-group col-md-6">
-							<label>Tipo Cliente</label>  
-							<select 
-								className="form-control" 
-								onChange={this.handleChange} 
-								name="tipo" 
-								defaultValue={tipo}
-							>
-								<option value="">Elegir...</option>
-								<option value="PREMIUM">PREMIUM</option>
-								<option value="BASICO">BÁSICO</option>
-							</select>
-						</div>
-					</div>
-					<button type="submit" className="btn btn-success float-right">Guardar Cambios</button>
-				</form>
+						<button
+							disabled={this.validarForm()}
+							type="submit"
+							className="btn btn-success float-right">
+							Crear Producto
+                </button>
+					</form>
 				)}
 			</Mutation>
 		)      

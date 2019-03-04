@@ -36,18 +36,10 @@ export default class NuevoProducto extends Component {
       nombre,
       precio: Number(precio),
       stock: Number(stock)
-    }
+    }  
 
     nuevoProducto({
       variables: { input }
-    })
-
-    this.setState({
-      producto: {
-        nombre: '',
-        precio: 0,
-        stock: 0
-      }
     })
   }
 

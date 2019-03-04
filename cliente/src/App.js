@@ -4,12 +4,14 @@ import ApolloClient, { InMemoryCache } from 'apollo-boost'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Header from './components/Layout/Header'
+
 import Clientes from './components/Clientes/Clientes'
 import NuevoCliente from './components/Clientes/NuevoCliente'
 import EditarCliente from './components/Clientes/EditarCliente'
 
 import Productos from './components/Productos/Productos'
 import NuevoProducto from './components/Productos/NuevoProducto'
+import EditarProducto from './components/Productos/EditarProducto'
 
 
 const client = new ApolloClient({
@@ -37,6 +39,7 @@ class App extends Component {
                 <Route exact path="/cliente/nuevo" component={NuevoCliente} />
                 <Route exact path="/productos" component={Productos} />
                 <Route exact path="/producto/nuevo" component={NuevoProducto} />
+                <Route exact path="/producto/editar/:id" component={EditarProducto} />
               </Switch>
             </div>
           </Fragment>
