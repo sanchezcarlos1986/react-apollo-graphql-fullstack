@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { withRouter } from 'react-router-dom' 
 
-import { ACTUALIZAR_CLIENTE } from '../mutations'
+import { ACTUALIZAR_CLIENTE } from '../../mutations'
 
 class FormularioEditar extends Component {
 	state =  {

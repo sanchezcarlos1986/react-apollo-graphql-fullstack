@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Mutation } from 'react-apollo'
 
-import { NUEVO_CLIENTE } from '../mutations'
+import { NUEVO_CLIENTE } from '../../mutations'
 
 export default class NuevoCliente extends Component {
   state = {
@@ -98,7 +98,7 @@ export default class NuevoCliente extends Component {
                     <input required onChange={this.handleChange} name="empresa" type="text" className="form-control" placeholder="Empresa" />
                   </div>
                   {
-                    emails.map((email, index) => (
+                    emails.map((_, index) => (
                       <div key={index} className="form-group col-md-12">
                         <label>Email {index + 1}</label>
                         <div className="input-group">

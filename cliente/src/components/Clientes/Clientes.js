@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react'
 import { Query, Mutation } from 'react-apollo'
 import { Link } from 'react-router-dom'
 
-import { CLIENTS_QUERY } from '../queries'
-import { ELIMINAR_CLIENTE } from '../mutations'
+import { CLIENTS_QUERY } from '../../queries'
+import { ELIMINAR_CLIENTE } from '../../mutations'
 
-import Paginador from './Paginador'
+import Paginador from '../Paginador'
 /**
  * pollInterval dice cada cuántos milisegundos se refrescarán los datos cacheados por Apollo
  */

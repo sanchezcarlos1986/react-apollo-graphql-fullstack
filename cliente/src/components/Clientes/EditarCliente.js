@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 
-import { CLIENT_QUERY } from '../queries'
+import { CLIENT_QUERY } from '../../queries'
 import FormularioEditarCliente from './FormularioEditarCliente'
 
 export default class EditarCliente extends Component {
