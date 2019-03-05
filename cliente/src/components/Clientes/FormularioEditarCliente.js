@@ -73,7 +73,7 @@ class FormularioEditar extends Component {
 
 					
 		return (
-			<Mutation mutation={ACTUALIZAR_CLIENTE} onCompleted={() => history.push('/')}>
+			<Mutation mutation={ACTUALIZAR_CLIENTE} onCompleted={() => history.push('/clientes')}>
 				{actualizarCliente => (
 				<form className="col-md-8 m-3" onSubmit={e => this.handleSubmit(e, actualizarCliente)}>
 					<div className="form-row">

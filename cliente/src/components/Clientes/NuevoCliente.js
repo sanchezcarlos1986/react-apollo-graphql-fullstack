@@ -79,7 +79,7 @@ export default class NuevoCliente extends Component {
       <Fragment>
         <h2 className="text-center">NuevoCliente</h2>
         <div className="row justify-content-center">
-          <Mutation mutation={NUEVO_CLIENTE} onCompleted={() => this.props.history.push('/')}>
+          <Mutation mutation={NUEVO_CLIENTE} onCompleted={() => this.props.history.push('/clientes')}>
             { crearCliente => (
               <form className="col-md-8 m-3" onSubmit={e => this.handleSubmit(e, crearCliente)}>
                 <div className="form-row">

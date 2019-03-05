@@ -79,7 +79,7 @@ export default class Clientes extends Component {
                 actual={actual} 
                 prevPage={this.prevPage} 
                 nextPage={this.nextPage} 
-                totalClientes={data.totalClientes}
+                total={data.totalClientes}
               />
             </Fragment>
           )

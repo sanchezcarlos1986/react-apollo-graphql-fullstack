@@ -14,7 +14,7 @@ const handleDelete = (id, eliminarProducto) => {
   eliminarProducto({ variables: { id } })  
 }
 
-const limite = 10
+const limite = 2
 
 export default class Productos extends Component {
   state = {
@@ -105,7 +105,7 @@ export default class Productos extends Component {
                 actual={actual} 
                 prevPage={this.prevPage} 
                 nextPage={this.nextPage} 
-                totalClientes={data.totalClientes}
+                total={data.totalProductos}
               />
             </Fragment>
           )
