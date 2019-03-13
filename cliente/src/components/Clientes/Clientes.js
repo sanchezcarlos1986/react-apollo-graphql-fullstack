@@ -6,6 +6,7 @@ import { CLIENTS_QUERY } from '../../queries'
 import { ELIMINAR_CLIENTE } from '../../mutations'
 
 import Paginador from '../Paginador'
+import Loader from '../Loader'
 /**
  * pollInterval dice cada cuántos milisegundos se refrescarán los datos cacheados por Apollo
  */
@@ -47,7 +48,7 @@ export default class Clientes extends Component {
     return (
       <Query query={CLIENTS_QUERY} variables={{ limite, offset }}>
         {({ loading, error, data }) => {
-          if (loading) return 'Loading...'
+          if (loading) return <Loader />
           if (error) return `Error: ${error.message}`
 
           return (
@@ -62,6 +63,7 @@ export default class Clientes extends Component {
                           <span><strong>{cliente.nombre} {cliente.apellido}</strong> - <i>{cliente.email}</i> - {cliente.empresa}</span>
                         </div>
                         <div className="col-md-4 d-flex justify-content-end">
+                          <Link to={`/pedidos/nuevo/${cliente.id}`} className="btn btn-warning d-block d-md-inline-block mr-2">&#43; Nuevo Pedido</Link>
                           <Mutation mutation={ELIMINAR_CLIENTE}>
                             {eliminarCliente => (
                               <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(cliente.id, eliminarCliente)}>&times; Eliminar</button>

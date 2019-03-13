@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 
+import Loader from '../Loader'
+
 import { PRODUCTO_QUERY } from '../../queries'
 import FormularioEditarProducto from './FormularioEditarProducto'
 
@@ -13,7 +15,7 @@ export default class EditarProducto extends Component {
         <div className="row justify-content-center">
           <Query query={PRODUCTO_QUERY} variables={{ id }}>
             {({ loading, error, data, refetch }) => {         
-              if (loading) return 'Loading...'
+              if (loading) return <Loader />
               if (error) return `Error: ${error.message}`
               return (
                 <FormularioEditarProducto

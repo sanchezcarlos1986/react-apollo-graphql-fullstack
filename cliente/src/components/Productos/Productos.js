@@ -6,6 +6,7 @@ import { PRODUCTOS_QUERY } from '../../queries'
 import { ELIMINAR_PRODUCTO } from '../../mutations'
 
 import Paginador from '../Paginador'
+import Loader from '../Loader'
 /**
  * pollInterval dice cada cuántos milisegundos se refrescarán los datos cacheados por Apollo
  */
@@ -48,7 +49,7 @@ export default class Productos extends Component {
     return (
       <Query query={PRODUCTOS_QUERY} variables={{ limite, offset }}>
         {({ loading, error, data }) => {
-          if (loading) return 'Loading...'
+          if (loading) return <Loader />
           if (error) return `Error: ${error.message}`
 
           return (
@@ -94,7 +95,7 @@ export default class Productos extends Component {
                             )}
                           </Mutation>
                         </td>
-                        <td> <Link to={`/producto/editar/${producto.id}`} className="btn btn-success d-block d-md-inline-block">Editar Producto</Link></td>
+                        <td> <Link to={`/productos/editar/${producto.id}`} className="btn btn-success d-block d-md-inline-block">Editar Producto</Link></td>
                       </tr>
                     )
                   }
