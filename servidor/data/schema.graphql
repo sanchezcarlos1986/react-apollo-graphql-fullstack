@@ -7,7 +7,11 @@
     emails: [Email]
     edad: Int
     tipo: TipoCliente
-    pedidos: [Pedido]
+  }
+
+  """ Tipo de dato para Emails """
+  type Email {
+    email: String
   }
 
   """ Información del Producto """
@@ -18,21 +22,32 @@
     stock: Int
   }
 
-  """ Tipo de dato para Emails """
-  type Email {
-    email: String
+  """ Información del Pedido """
+  type Pedido {
+    id: ID
+    pedido: [PedidoProducto]
+    total: Int
+    fecha: String
+    cliente: ID
+    estado: Estadopedido    
   }
 
-   """ Tipo de dato para Pedidos """
-  type Pedido {
-    producto: String
-    precio: Int
+  type PedidoProducto {
+    id: ID 
+    cantidad: Int
   }
 
   """ Tipos de clientes """
   enum TipoCliente {
     BASICO
     PREMIUM
+  }
+
+    """ Tipos de pedidos """
+  enum Estadopedido {
+    PENDIENTE
+    COMPLETADO
+    CANCELADO
   }
 
   """ Query para obtener datos del Cliente """
@@ -44,12 +59,6 @@
     obtenerProductos(limite: Int, offset: Int) : [Producto]
     obtenerProducto(id: ID): Producto
     totalProductos: String
-  }
-
-  """ Campo para ingresar Pedidos """
-  input PedidoInput {
-    producto: String
-    precio: Int
   }
 
   #""" Campo para ingresar Emails """
@@ -77,6 +86,20 @@
     stock: Int!
   }
 
+  input PedidoInput {
+    id: ID
+    pedido: [PedidoProductoInput]
+    total: Int
+    fecha: String
+    cliente: ID
+    estado: Estadopedido    
+  }
+
+  input PedidoProductoInput {
+    id: ID 
+    cantidad: Int
+  }
+
   """ Mutations para crear nuevos Clientes """
   type Mutation {
     #Nombre del resolver, Input con datos y valor que retorna
@@ -88,4 +111,8 @@
     nuevoProducto(input: ProductoInput): Producto
     actualizarProducto(input: ProductoInput): Producto
     eliminarProducto(id: ID!): String
+    # Pedidos
+    nuevoPedido(input: PedidoInput): Pedido
+    #actualizarProducto(input: ProductoInput): Producto
+    #eliminarProducto(id: ID!): String
   }

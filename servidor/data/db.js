@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise
 
 mongoose.connect('mongodb://localhost/clientes', { useNewUrlParser: true })
 
-// Definir el Schema de clientes
+// Definir el Schema de Clientes
 const clientesSchema = new mongoose.Schema({
   nombre: String,
   apellido: String,
@@ -16,15 +16,24 @@ const clientesSchema = new mongoose.Schema({
   pedidos: Array
 })
 
-const Clientes = mongoose.model('clientes', clientesSchema)
-
-// Productos
+// Definir el Schema de Productos
 const productosSchema = new mongoose.Schema({
   nombre: String,
   precio: Number,
   stock: Number
 })
 
-const Productos = mongoose.model('productos', productosSchema)
+// Definir el Schema de Pedidos
+const pedidosSchema = new mongoose.Schema({
+  pedido: Array,
+  total: Number,
+  fecha: Date,
+  cliente: String,
+  estado: String
+})
 
-export { Clientes, Productos }
+const Clientes = mongoose.model('clientes', clientesSchema)
+const Productos = mongoose.model('productos', productosSchema)
+const Pedidos = mongoose.model('pedidos', pedidosSchema)
+
+export { Clientes, Productos, Pedidos }

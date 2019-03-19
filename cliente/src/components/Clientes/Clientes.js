@@ -69,7 +69,7 @@ export default class Clientes extends Component {
                               <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(cliente.id, eliminarCliente)}>&times; Eliminar</button>
                             )}
                           </Mutation>
-                          <Link to={`/cliente/editar/${cliente.id}`} className="btn btn-success d-block d-md-inline-block">Editar Cliente</Link>
+                          <Link to={`/clientes/editar/${cliente.id}`} className="btn btn-success d-block d-md-inline-block">Editar Cliente</Link>
                         </div>
                       </div>
                     </li>

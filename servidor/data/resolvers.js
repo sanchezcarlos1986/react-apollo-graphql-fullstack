@@ -1,5 +1,5 @@
 // import mongoose from 'mongoose'
-import { Clientes, Productos } from './db'
+import { Clientes, Productos, Pedidos } from './db'
 import { rejects } from 'assert'
 
 export const resolvers = {
@@ -58,7 +58,7 @@ export const resolvers = {
 
       nuevoCliente.id = nuevoCliente._id
 
-      return new Promise((resolve, object) => {
+      return new Promise(resolve => {
         nuevoCliente.save(err => {
           if (err) rejects(err)
           resolve(nuevoCliente)
@@ -115,5 +115,41 @@ export const resolvers = {
         })
       })
     },
+    // Pedidos
+    nuevoPedido: (_, { input: { pedido, total, cliente } }) => {
+      const nuevoPedido = new Pedidos({
+        pedido,
+        total,
+        fecha: new Date(),
+        cliente,
+        estado: 'PENDIENTE'
+      })
+
+      // mongo db crea el ID que se asigna al objeto
+      nuevoPedido.id = nuevoPedido._id
+
+      return new Promise(resolve => {
+        nuevoPedido.save(err => {
+          if (err) rejects(err)
+          resolve(nuevoPedido)
+        })
+      })
+    },
+    // actualizarProducto: (_, { input }) => {
+    //   return new Promise(resolve => {
+    //     Productos.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, producto) => {
+    //       if (err) rejects(err)
+    //       resolve(producto)
+    //     })
+    //   })
+    // },
+    // eliminarProducto: (_, { id }) => {
+    //   return new Promise(resolve => {
+    //     Productos.findOneAndRemove({ _id: id }, err => {
+    //       if (err) rejects(err)
+    //       resolve(`El producto nº ${id} se eliminó correctamente.`)
+    //     })
+    //   })
+    // },
   }
 }
