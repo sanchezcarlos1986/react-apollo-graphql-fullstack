@@ -20,7 +20,7 @@ export default class NuevoPedido extends Component {
             <DatosCliente id={id} />
           </div>
           <div className="col-md-9">
-            <Query query={PRODUCTOS_QUERY} variables={{ id }}>
+            <Query query={PRODUCTOS_QUERY} variables={{ id, stock: true }}>
               {({ loading, error, data }) => {
                 if (loading) return <Loader />
                 if (error) return `Error: ${error.message}`

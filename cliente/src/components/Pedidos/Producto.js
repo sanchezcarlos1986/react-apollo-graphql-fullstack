@@ -20,10 +20,17 @@ export default class Producto extends Component {
           <td>{stock}</td>
           <td>
             <input 
+              min="1"
               type="number"
               placeholder="10"
               className="form-control"
-              onChange={e => actualizarCantidad(e.target.value, index)}
+              onChange={e => {
+                if (e.target.value > stock || e.target.value < 0) {
+                  e.target.value = 0
+                }
+
+                actualizarCantidad(e.target.value, index)
+              }}
             />
           </td>
           <td> 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
 import { NUEVO_PEDIDO } from '../../mutations'
+import { withRouter } from 'react-router-dom'
 
 const validarPedido = (productos, total) => {
   const noValido = !productos || total === 0
@@ -19,9 +20,9 @@ const enviarNuevoPedido = (nuevoPedido, productos, total, cliente) => {
   
 }
 
-const GenerarPedido = ({ productos, total, cliente }) => {
+const GenerarPedido = ({ productos, total, cliente, history }) => {
   return (
-    <Mutation mutation={NUEVO_PEDIDO} onCompleted={() => console.log('okis')}>
+    <Mutation mutation={NUEVO_PEDIDO} onCompleted={() => history.push('/clientes')}>
       {
         nuevoPedido => (
           <button
@@ -38,4 +39,4 @@ const GenerarPedido = ({ productos, total, cliente }) => {
   )
 }
 
-export default GenerarPedido
+export default withRouter(GenerarPedido)

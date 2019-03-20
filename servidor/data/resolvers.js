@@ -24,8 +24,14 @@ export const resolvers = {
       })
     },
     // Productos
-    obtenerProductos: (_, { limite, offset }) => {
-      return Productos.find().limit(limite).skip(offset)
+    obtenerProductos: (_, { limite, offset, stock }) => {
+      let filtro
+
+      if (stock) {
+        filtro = { stock: { $gt: 0 } }
+      }
+
+      return Productos.find(filtro).limit(limite).skip(offset)
     },
     obtenerProducto: (_, { id }) => {
       return new Promise(resolve => {
