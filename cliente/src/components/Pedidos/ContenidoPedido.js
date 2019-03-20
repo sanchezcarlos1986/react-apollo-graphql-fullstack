@@ -3,6 +3,7 @@ import Select from 'react-select'
 import Animated from 'react-select/lib/animated'
 import PropTypes from 'prop-types'
 import Resumen from './Resumen'
+import GenerarPedido from './GenerarPedido'
 
 export default class ContenidoPedido extends Component {
   state = {
@@ -48,7 +49,6 @@ export default class ContenidoPedido extends Component {
   }
 
   eliminarProducto = (id, index) => {
-    console.log('eliminarProducto:')
     const { productos } = this.state
 
     productos[index].cantidad = 0
@@ -61,7 +61,7 @@ export default class ContenidoPedido extends Component {
   }
 
   render() {
-    const { productos } = this.props
+    const { productos, id } = this.props
     return (
       <Fragment>
         <h2 className="text-center mb-5">Seleccionar Artículos</h2>
@@ -82,6 +82,11 @@ export default class ContenidoPedido extends Component {
         <p className="font-weight-bold float-right">Total:
           <span className="font-weight-normal">$ {this.state.total}</span>
         </p>
+        <GenerarPedido
+          cliente={id}
+          productos={this.state.productos} 
+          total={this.state.total} 
+        />
       </Fragment>
     )
   }

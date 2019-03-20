@@ -116,12 +116,12 @@ export const resolvers = {
       })
     },
     // Pedidos
-    nuevoPedido: (_, { input: { pedido, total, cliente } }) => {
+    nuevoPedido: (_, {input}) => {
       const nuevoPedido = new Pedidos({
-        pedido,
-        total,
+        pedido: input.pedido,
+        total: input.total,
         fecha: new Date(),
-        cliente,
+        cliente: input.cliente,
         estado: 'PENDIENTE'
       })
 
@@ -129,6 +129,18 @@ export const resolvers = {
       nuevoPedido.id = nuevoPedido._id
 
       return new Promise(resolve => {
+        // recorre y actualiza la cantidad de productos
+        input.pedido.forEach(pedido => {
+          Productos.updateOne({ _id: pedido.id }, 
+            {
+            "$inc": 
+              { "stock": -pedido.cantidad }
+            }, function(error) {
+              if (error) return new Error(error)
+            }
+          )
+        })
+        
         nuevoPedido.save(err => {
           if (err) rejects(err)
           resolve(nuevoPedido)
