@@ -48,6 +48,14 @@ export const resolvers = {
           resolve(count)
         })
       })
+    },
+    obtenerPedidos: (_, { cliente }) => {
+      return new Promise(resolve => {
+        Pedidos.find({ cliente }, (err, pedido) => {
+          if (err) rejects(err)
+          resolve(pedido)
+        })
+      })
     }
   },
   Mutation: {

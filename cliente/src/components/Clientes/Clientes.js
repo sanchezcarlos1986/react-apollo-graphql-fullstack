@@ -59,11 +59,12 @@ export default class Clientes extends Component {
                   data.getClientes.map(cliente =>
                     <li className="list-group-item" key={cliente.id}>
                       <div className="row justify-content-between align-items-center">
-                        <div className="col-md-8 d-flex justify-content-between align-items-center">
+                        <div className="col-md-6 d-flex justify-content-between align-items-center">
                           <span><strong>{cliente.nombre} {cliente.apellido}</strong> - <i>{cliente.email}</i> - {cliente.empresa}</span>
                         </div>
-                        <div className="col-md-4 d-flex justify-content-end">
+                        <div className="col-md-6 d-flex justify-content-end">
                           <Link to={`/pedidos/nuevo/${cliente.id}`} className="btn btn-warning d-block d-md-inline-block mr-2">&#43; Nuevo Pedido</Link>
+                          <Link to={`/pedidos/${cliente.id}`} className="btn btn-primary d-block d-md-inline-block mr-2">Ver Pedidos</Link>
                           <Mutation mutation={ELIMINAR_CLIENTE}>
                             {eliminarCliente => (
                               <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(cliente.id, eliminarCliente)}>&times; Eliminar</button>
