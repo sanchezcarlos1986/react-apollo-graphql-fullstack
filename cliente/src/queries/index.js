@@ -45,8 +45,7 @@ export const PRODUCTOS_QUERY = gql`
   }
 `
 
-
-export const PRODUCTO_QUERY = gql`
+export const OBTENER_PRODUCTO = gql`
   query obtenerProducto($id: ID){
     obtenerProducto(id: $id) {
       id
@@ -68,6 +67,7 @@ export const OBTENER_PEDIDOS = gql`
       }
       total
       estado
+      fecha
     }
   }
 `

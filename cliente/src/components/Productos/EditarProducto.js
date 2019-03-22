@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 
 import Loader from '../Loader'
 
-import { PRODUCTO_QUERY } from '../../queries'
+import { OBTENER_PRODUCTO } from '../../queries'
 import FormularioEditarProducto from './FormularioEditarProducto'
 
 export default class EditarProducto extends Component {
@@ -13,7 +13,7 @@ export default class EditarProducto extends Component {
       <Fragment>
         <h2 className="text-center">Editar Producto</h2>
         <div className="row justify-content-center">
-          <Query query={PRODUCTO_QUERY} variables={{ id }}>
+          <Query query={OBTENER_PRODUCTO} variables={{ id }}>
             {({ loading, error, data, refetch }) => {         
               if (loading) return <Loader />
               if (error) return `Error: ${error.message}`
