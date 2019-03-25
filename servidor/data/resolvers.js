@@ -142,19 +142,7 @@ export const resolvers = {
       // mongo db crea el ID que se asigna al objeto
       nuevoPedido.id = nuevoPedido._id
 
-      return new Promise(resolve => {
-        // recorre y actualiza la cantidad de productos
-        input.pedido.forEach(pedido => {
-          Productos.updateOne({ _id: pedido.id }, 
-            {
-            "$inc": 
-              { "stock": -pedido.cantidad }
-            }, function(error) {
-              if (error) return new Error(error)
-            }
-          )
-        })
-        
+      return new Promise(resolve => {     
         nuevoPedido.save(err => {
           if (err) rejects(err)
           resolve(nuevoPedido)
@@ -163,6 +151,23 @@ export const resolvers = {
     },
     actualizarPedido: (_, { input }) => {
       return new Promise(resolve => {
+        // recorre y actualiza la cantidad de productos en base al estado del pedido
+        const { estado } = input
+        let instruccion
+        if (estado === 'COMPLETADO') instruccion = '-'
+        if (estado === 'CANCELADO') instruccion = '+'
+
+        input.pedido.forEach(pedido => {
+          Productos.updateOne({ _id: pedido.id },
+            {
+              "$inc":
+                { "stock": `${instruccion}${pedido.cantidad}` }
+            }, function (error) {
+              if (error) return new Error(error)
+            }
+          )
+        })
+
         Pedidos.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err) => {
           if (err) rejects(err)
           resolve(`pedido ${input.id} actualizado a ${input.estado}`)
