@@ -17,7 +17,7 @@ const PedidosCliente = ({ match }) => {
               if (loading) return <Loader />
               if (error) return `Error: ${error.message}`
               return (
-                data.obtenerPedidos.map(pedidos => <Pedido key={pedidos.id} pedidos={pedidos} />)
+                data.obtenerPedidos.map(pedidos => <Pedido key={pedidos.id} cliente={cliente} pedidos={pedidos} />)
               )
             }
           }

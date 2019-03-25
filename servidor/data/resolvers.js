@@ -161,14 +161,14 @@ export const resolvers = {
         })
       })
     },
-    // actualizarProducto: (_, { input }) => {
-    //   return new Promise(resolve => {
-    //     Productos.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, producto) => {
-    //       if (err) rejects(err)
-    //       resolve(producto)
-    //     })
-    //   })
-    // },
+    actualizarPedido: (_, { input }) => {
+      return new Promise(resolve => {
+        Pedidos.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err) => {
+          if (err) rejects(err)
+          resolve(`pedido ${input.id} actualizado a ${input.estado}`)
+        })
+      })
+    },
     // eliminarProducto: (_, { id }) => {
     //   return new Promise(resolve => {
     //     Productos.findOneAndRemove({ _id: id }, err => {

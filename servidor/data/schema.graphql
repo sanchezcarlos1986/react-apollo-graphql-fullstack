@@ -115,6 +115,6 @@
     eliminarProducto(id: ID!): String
     # Pedidos
     nuevoPedido(input: PedidoInput): Pedido
-    #actualizarProducto(input: ProductoInput): Producto
+    actualizarPedido(input: PedidoInput): String
     #eliminarProducto(id: ID!): String
   }

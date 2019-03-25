@@ -123,3 +123,7 @@
             transform: scale(1);
   }
 }
+
+.card {
+  border-width: 2px;
+}
