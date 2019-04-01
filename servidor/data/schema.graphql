@@ -37,6 +37,12 @@
     cantidad: Int
   }
 
+  """ Información de Gráficas """
+  type ClienteTotal {
+    total: Float
+    cliente: [Cliente]
+  }
+
   """ Tipos de clientes """
   enum TipoCliente {
     BASICO
@@ -60,7 +66,9 @@
     obtenerProducto(id: ID): Producto
     totalProductos: String
     #Pedidos
-    obtenerPedidos(cliente: String): [Pedido]
+    obtenerPedidos(cliente: ID): [Pedido]
+    #Gráficas
+    topClientes: [ClienteTotal]
   }
 
   #""" Campo para ingresar Emails """

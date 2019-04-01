@@ -15,7 +15,7 @@ const handleDelete = (id, eliminarProducto) => {
   eliminarProducto({ variables: { id } })  
 }
 
-const limite = 2
+const limite = 5
 
 export default class Productos extends Component {
   state = {
@@ -71,13 +71,20 @@ export default class Productos extends Component {
                 </thead>
                 <tbody>
                   {
-                    data.obtenerProductos.map(producto =>
-                      <tr key={producto.id}>
+                    data.obtenerProductos.map(producto => {
+                      const { stock } = producto
+
+                      let clase = ''
+
+                      if (stock > 51 && stock < 100) clase = 'table-warning'
+                      if (stock < 50) clase = 'table-danger text-light'
+
+                      return <tr key={producto.id} className={clase}>
                         <td>{producto.nombre}</td>
                         <td>{producto.precio}</td>
                         <td>{producto.stock}</td>
                         <td>
-                          <Mutation 
+                          <Mutation
                             mutation={ELIMINAR_PRODUCTO}
                             onCompleted={data => {
                               this.setState({
@@ -89,15 +96,15 @@ export default class Productos extends Component {
                               })
                             }}
                           >
-                            {                              
+                            {
                               eliminarProducto => (
-                              <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(producto.id, eliminarProducto)}>&times; Eliminar</button>
-                            )}
+                                <button type="button" className="btn btn-danger d-block d-md-inline-block" style={{ 'marginRight': '10px' }} onClick={() => handleDelete(producto.id, eliminarProducto)}>&times; Eliminar</button>
+                              )}
                           </Mutation>
                         </td>
                         <td> <Link to={`/productos/editar/${producto.id}`} className="btn btn-success d-block d-md-inline-block">Editar Producto</Link></td>
                       </tr>
-                    )
+                    })
                   }
                 </tbody>
               </table>
