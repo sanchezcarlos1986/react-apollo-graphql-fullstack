@@ -1,5 +1,5 @@
 // import mongoose from 'mongoose'
-import { Clientes, Productos, Pedidos } from './db'
+import { Clientes, Productos, Pedidos, Usuarios } from './db'
 import { rejects } from 'assert'
 
 export const resolvers = {
@@ -206,13 +206,20 @@ export const resolvers = {
         })
       })
     },
-    // eliminarProducto: (_, { id }) => {
-    //   return new Promise(resolve => {
-    //     Productos.findOneAndRemove({ _id: id }, err => {
-    //       if (err) rejects(err)
-    //       resolve(`El producto nº ${id} se eliminó correctamente.`)
-    //     })
-    //   })
-    // },
+    crearUsuario: async (_, { usuario, password }) => {
+      // revisar que un usuario no exista
+      const existeUsuario = await Usuarios.findOne({ usuario })
+
+      if (existeUsuario) {
+        throw new Error(`El usuario ${usuario} ya existe.`)
+      }
+
+      const nuevoUsuario = await new Usuarios({
+        usuario,
+        password
+      }).save()
+
+      return `El usuario ${usuario} se creó correctamente`
+    }
   }
 }

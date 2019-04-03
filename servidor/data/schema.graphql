@@ -124,5 +124,6 @@
     # Pedidos
     nuevoPedido(input: PedidoInput): Pedido
     actualizarPedido(input: PedidoInput): String
-    #eliminarProducto(id: ID!): String
+    # Usuarios
+    crearUsuario(usuario: String!, password: String!): String
   }
