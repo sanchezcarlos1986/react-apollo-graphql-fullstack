@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Mutation } from 'react-apollo'
 import { NUEVO_USUARIO } from '../../mutations'
+import Error from '../Alertas/Error'
 
 const initialState = {
   usuario: '',
@@ -29,8 +30,9 @@ export default class Registro extends Component {
   crearRegistro = (e, crearUsuario) => {
     e.preventDefault()
     
-    crearUsuario().then(data => {
+    crearUsuario().then(() => {
       this.setState({ ...initialState })
+      this.props.history.push('/login')
     })
     
   }
@@ -43,9 +45,12 @@ export default class Registro extends Component {
         <h1 className="text-center mb-5">Nuevo Usuario</h1>
         <div className="row  justify-content-center">
           <Mutation mutation={NUEVO_USUARIO} variables={{ usuario, password }}>
-          {(crearUsuario, { loading, error, data }) => {
+          {(crearUsuario, { loading, error, data }) => {           
             return (
               <form className="col-md-8" onSubmit={e => this.crearRegistro(e, crearUsuario) }>
+                {
+                  error && <Error error={error.graphQLErrors[0].message} />
+                }
                 <div className="form-group">
                   <label>Usuario</label>
                   <input
@@ -81,7 +86,7 @@ export default class Registro extends Component {
                 </div>
 
                 <button
-                  disabled={this.validarForm()}
+                  disabled={loading || this.validarForm()}
                   type="submit"
                   className="btn btn-success float-right">
                   Crear Usuario

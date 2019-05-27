@@ -43,6 +43,12 @@
     cliente: [Cliente]
   }
 
+  """ Información de Usuarios """
+  type Token {
+    token: String!
+  }
+
+
   """ Tipos de clientes """
   enum TipoCliente {
     BASICO
@@ -126,4 +132,5 @@
     actualizarPedido(input: PedidoInput): String
     # Usuarios
     crearUsuario(usuario: String!, password: String!): String
+    autenticarUsuario(usuario: String!, password: String!): Token
   }
